@@ -2,70 +2,63 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A simple model of a deer.
- * Deer age, move, breed, and die.
+ * A simple model of a plant.
+ * Plants age, breed, and die.
  *
  * @author David J. Barnes and Michael Kölling
  * @version 7.1
  */
-public class Deer extends Organism {
-    // Characteristics shared by all deers (class variables).
-    // The age at which a deer can start to breed.
-    private static final int BREEDING_AGE = Values.getInt("Deer", "breed_age");
+public class Plant extends Organism {
+    // Characteristics shared by all plants (class variables).
+    // The age at which a plant can start to breed.
+    private static final int BREEDING_AGE = Values.getInt("Bison", "breed_age");
 
     // The age to which a tiger can live.
-    private static final int MAX_AGE = Values.getInt("Deer", "max_age");
+    private static final int MAX_AGE = Values.getInt("Bison", "max_age");
 
     // The likelihood of a tiger breeding.
-    private static final double BREEDING_PROBABILITY = Values.getProb("Deer", "breeding");
+    private static final double BREEDING_PROBABILITY = Values.getProb("Bison", "breeding");
 
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
 
-    // Individual characteristics (instance fields).
-
     /**
-     * Create a new deer. A deer may be created with age
+     * Create a new plant. A plant may be created with age
      * zero (a new born) or with a random age.
      *
-     * @param randomAge If true, the deer will have a random age.
+     * @param randomAge If true, the plant will have a random age.
      * @param location  The location within the field.
      */
     //AC random gender added
-    public Deer(boolean randomAge, Location location) {
-        super(randomAge, location); // Ensures gender is correctly assigned
+    public Plant(boolean randomAge, Location location) {
+        super(randomAge, location);
     }
 
     @Override
-    protected Location findFood(Field field) {
-        List<Location> adjacent = field.getAdjacentLocations(getLocation());
-        for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
-            if (organism != null && organism.isAlive()) {
-                if (organism instanceof Plant) {
-                    setFoodLevel(organism.getFoodLevel());
-                    organism.setDead();
-                }
-            }
-        }
-        return null;
+    protected Location findFood(Field currentField) {
+        return null;//plants do not eat anything
+    }
+
+    @Override
+    public void act(Field currentField, Field nextFieldState, DayTime dayTime) {
+        super.act(currentField, nextFieldState, dayTime);
     }
 
     /**
-     * Check whether or not this deer is to give birth at this step.
+     * Check whether or not this plant is to give birth at this step.
      * New births will be made into free adjacent locations.
      *
-     * @param field the field.
+     * @param field The field.
      */
 
-    private Deer findMate(Field field) {
+    private Plant findMate(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
             Organism organism = field.getAnimalAt(loc);
-            if (organism instanceof Deer && canMateWith(organism)) {
-                return (Deer) organism;
+            if (organism instanceof Plant && canMateWith(organism)) {
+                return (Plant) organism;
             }
         }
         return null;
@@ -77,17 +70,17 @@ public class Deer extends Organism {
 
     @Override
     public boolean canMateWith(Organism organism) {
-        return organism instanceof Deer && this.isMale() != organism.isMale();
+        return organism instanceof Plant && this.isMale() != organism.isMale();
     }
 
 
     protected void giveBirth(Field currentField, Field nextField, List<Location> freeLocations) {
-        Deer mate = findMate(currentField);
+        Plant mate = findMate(currentField);
         if (mate != null && canBreed(currentField)) {
             int births = breed(currentField);
             for (int b = 0; b < births && !freeLocations.isEmpty(); b++) {
                 Location loc = freeLocations.remove(0);
-                Deer young = new Deer(false, loc);  // Random gender
+                Plant young = new Plant(false, loc);  // Random gender
                 nextField.placeAnimal(young, loc);
             }
         }
@@ -110,9 +103,9 @@ public class Deer extends Organism {
 
 
     /**
-     * A deer can breed if it has reached the breeding age.
+     * A plant can breed if it has reached the breeding age.
      *
-     * @return true if the deer can breed, false otherwise.
+     * @return true if the plant can breed, false otherwise.
      */
     private boolean canBreed(Field field) {
         return getAge() >= BREEDING_AGE && findMate(field) != null;

@@ -7,22 +7,17 @@ public class DayTime {
         this.stepCount = stepCount;
     }
 
-    public void advanceHour()
-    {
+    public void advanceHour() {
         hour++;
-        if(hour >= 24) {
+        if (hour >= 24) {
             hour = 0;
         }
     }
 
-    public String DayorNight()
-    {
-        if(hour >= 6 && hour <= 20)
-        {
+    public String DayorNight() {
+        if (hour >= 6 && hour <= 20) {
             return "Day";
-        }
-        else
-        {
+        } else {
             return "Night";
         }
     }
