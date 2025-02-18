@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=DayTime
+comment1.params=hour\ stepCount
+comment1.target=DayTime(int,\ int)
+comment2.params=
+comment2.target=void\ advanceHour()
+comment3.params=
+comment3.target=java.lang.String\ DayorNight()
+comment4.params=
+comment4.target=int\ getHour()
+numComments=5
