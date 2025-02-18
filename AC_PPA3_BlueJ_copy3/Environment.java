@@ -1,17 +1,25 @@
-public class DayTime {
+public class Environment {
     private int hour;
     private int stepCount;
+    private WeatherType currentWeather;
 
-    public DayTime(int hour, int stepCount) {
+    public Environment(int hour, int stepCount) {
         this.hour = hour;
         this.stepCount = stepCount;
+        currentWeather = WeatherType.NORMAL;
     }
 
-    public void advanceHour() {
+    public void advanceStep() {
+        stepCount++;
         hour++;
         if (hour >= 24) {
             hour = 0;
         }
+        this.currentWeather = WeatherType.values()[Randomizer.getRandom().nextInt(WeatherType.values().length)];
+    }
+
+    public WeatherType getCurrentWeather() {
+        return currentWeather;
     }
 
     public String DayorNight() {

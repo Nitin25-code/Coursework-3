@@ -112,7 +112,7 @@ public class Field {
     }
 
     /**
-     * Print out the number of foxes and rabbits in the field.
+     * Print out the number of wolves and hamsters in the field.
      */
     public void fieldStats() {
         HashMap<String, Integer> animalCounts = new HashMap<>();
@@ -132,9 +132,9 @@ public class Field {
     }
 
     /**
-     * Return whether there is at least one rabbit and one fox in the field.
+     * Return whether there is at least one hamster and one wolf in the field.
      *
-     * @return true if there is at least one rabbit and one fox in the field.
+     * @return true if there is at least one hamster and one wolf in the field.
      */
     public boolean isViable() {
         boolean rabbitFound = false;
@@ -146,12 +146,12 @@ public class Field {
         Iterator<Organism> it = organisms.iterator();
         while (it.hasNext() && !(rabbitFound && foxFound && bisonFound && tigerFound && deerFound && plantFound)) {
             Organism anOrganism = it.next();
-            if (anOrganism instanceof Rabbit rabbit) {
-                if (rabbit.isAlive()) {
+            if (anOrganism instanceof Hamster hamster) {
+                if (hamster.isAlive()) {
                     rabbitFound = true;
                 }
-            } else if (anOrganism instanceof Fox fox) {
-                if (fox.isAlive()) {
+            } else if (anOrganism instanceof Wolf wolf) {
+                if (wolf.isAlive()) {
                     foxFound = true;
                 }
             } else if (anOrganism instanceof Deer deer) {

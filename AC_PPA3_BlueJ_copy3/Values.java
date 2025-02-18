@@ -16,14 +16,14 @@ public class Values {
                     case "breeding":
                         return 0.24;
                 }
-            case "Fox":
+            case "Wolf":
                 switch (dataType) {
                     case "creation":
                         return 0.009;
                     case "breeding":
                         return 0.24;
                 }
-            case "Rabbit":
+            case "Hamster":
                 switch (dataType) {
                     case "creation":
                         return 0.012;
@@ -71,7 +71,7 @@ public class Values {
                     case "sleep_time":
                         return 22;
                 }
-            case "Fox":
+            case "Wolf":
                 switch (dataType) {
                     case "breed_age":
                         return 10;
@@ -85,7 +85,7 @@ public class Values {
                     case "sleep_time":
                         return 22;
                 }
-            case "Rabbit":
+            case "Hamster":
                 switch (dataType) {
                     case "breed_age":
                         return 5;

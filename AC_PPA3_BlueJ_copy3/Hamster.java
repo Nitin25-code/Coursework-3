@@ -2,22 +2,22 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A simple model of a rabbit.
- * Rabbits age, move, breed, and die.
+ * A simple model of a hamster.
+ * Hamsters age, move, breed, and die.
  *
  * @author David J. Barnes and Michael Kölling
  * @version 7.1
  */
-public class Rabbit extends Organism {
-    // Characteristics shared by all rabbits (class variables).
-    // The age at which a rabbit can start to breed.
-    private static final int BREEDING_AGE = Values.getInt("Rabbit", "breed_age");
+public class Hamster extends Organism {
+    // Characteristics shared by all hamsters (class variables).
+    // The age at which a hamster can start to breed.
+    private static final int BREEDING_AGE = Values.getInt("Hamster", "breed_age");
 
     // The age to which a tiger can live.
-    private static final int MAX_AGE = Values.getInt("Rabbit", "max_age");
+    private static final int MAX_AGE = Values.getInt("Hamster", "max_age");
 
     // The likelihood of a tiger breeding.
-    private static final double BREEDING_PROBABILITY = Values.getProb("Rabbit", "breeding");
+    private static final double BREEDING_PROBABILITY = Values.getProb("Hamster", "breeding");
 
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
@@ -25,14 +25,14 @@ public class Rabbit extends Organism {
     private static final Random rand = Randomizer.getRandom();
 
     /**
-     * Create a new rabbit. A rabbit may be created with age
+     * Create a new hamster. A hamster may be created with age
      * zero (a new born) or with a random age.
      *
-     * @param randomAge If true, the rabbit will have a random age.
+     * @param randomAge If true, the hamster will have a random age.
      * @param location  The location within the field.
      */
     //AC random gender added
-    public Rabbit(boolean randomAge, Location location) {
+    public Hamster(boolean randomAge, Location location) {
         super(randomAge, location); // Ensures gender is correctly assigned
     }
 
@@ -52,18 +52,18 @@ public class Rabbit extends Organism {
     }
 
     /**
-     * Check whether or not this rabbit is to give birth at this step.
+     * Check whether or not this hamster is to give birth at this step.
      * New births will be made into free adjacent locations.
      *
      * @param field The field.
      */
 
-    private Rabbit findMate(Field field) {
+    private Hamster findMate(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
             Organism organism = field.getAnimalAt(loc);
-            if (organism instanceof Rabbit && canMateWith(organism)) {
-                return (Rabbit) organism;
+            if (organism instanceof Hamster && canMateWith(organism)) {
+                return (Hamster) organism;
             }
         }
         return null;
@@ -75,17 +75,17 @@ public class Rabbit extends Organism {
 
     @Override
     public boolean canMateWith(Organism organism) {
-        return organism instanceof Rabbit && this.isMale() != organism.isMale();
+        return organism instanceof Hamster && this.isMale() != organism.isMale();
     }
 
 
     protected void giveBirth(Field currentField, Field nextField, List<Location> freeLocations) {
-        Rabbit mate = findMate(currentField);
+        Hamster mate = findMate(currentField);
         if (mate != null && canBreed(currentField)) {
             int births = breed(currentField);
             for (int b = 0; b < births && !freeLocations.isEmpty(); b++) {
                 Location loc = freeLocations.remove(0);
-                Rabbit young = new Rabbit(false, loc);  // Random gender
+                Hamster young = new Hamster(false, loc);  // Random gender
                 nextField.placeAnimal(young, loc);
             }
         }
@@ -108,9 +108,9 @@ public class Rabbit extends Organism {
 
 
     /**
-     * A rabbit can breed if it has reached the breeding age.
+     * A hamster can breed if it has reached the breeding age.
      *
-     * @return true if the rabbit can breed, false otherwise.
+     * @return true if the hamster can breed, false otherwise.
      */
     private boolean canBreed(Field field) {
         return getAge() >= BREEDING_AGE && findMate(field) != null;

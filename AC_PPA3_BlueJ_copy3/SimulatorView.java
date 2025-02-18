@@ -40,8 +40,8 @@ public class SimulatorView extends JFrame {
     public SimulatorView(int height, int width) {
         stats = new FieldStats();
         colors = new LinkedHashMap<>();
-        setColor(Rabbit.class, Color.cyan);
-        setColor(Fox.class, Color.pink);
+        setColor(Hamster.class, Color.cyan);
+        setColor(Wolf.class, Color.pink);
         setColor(Deer.class, Color.blue);
         setColor(Tiger.class, Color.red);
         setColor(Bison.class, new Color(101, 55, 0));
@@ -89,16 +89,18 @@ public class SimulatorView extends JFrame {
     /**
      * Show the current status of the field.
      *
-     * @param step    Which iteration step it is.
-     * @param dayTime
-     * @param field   The field whose status is to be displayed.
+     * @param step        Which iteration step it is.
+     * @param environment
+     * @param field       The field whose status is to be displayed.
      */
-    public void showStatus(int step, DayTime dayTime, Field field) {
+    public void showStatus(int step, Environment environment, Field field) {
         if (!isVisible()) {
             setVisible(true);
         }
 
-        stepLabel.setText(STEP_PREFIX + step + " Time: " + String.format("%2d:00", dayTime.getHour()));
+        stepLabel.setText(STEP_PREFIX + step +
+                " Time: " + String.format("%2d:00", environment.getHour()) +
+                " Weather: " + environment.getCurrentWeather());
         stats.reset();
 
         fieldView.preparePaint();

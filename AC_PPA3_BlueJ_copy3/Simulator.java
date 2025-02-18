@@ -3,7 +3,7 @@ import java.util.Random;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field containing
- * rabbits and foxes.
+ * hamsters and wolves.
  *
  * @author David J. Barnes and Michael Kölling
  * @version 7.1
@@ -14,11 +14,11 @@ public class Simulator {
     private static final int DEFAULT_WIDTH = 120;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
-    // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = Values.getProb("Fox", "creation");
+    // The probability that a wolf will be created in any given grid position.
+    private static final double FOX_CREATION_PROBABILITY = Values.getProb("Wolf", "creation");
 
-    // The probability that a rabbit will be created in any given position.
-    private static final double RABBIT_CREATION_PROBABILITY = Values.getProb("Rabbit", "creation");
+    // The probability that a hamster will be created in any given position.
+    private static final double RABBIT_CREATION_PROBABILITY = Values.getProb("Hamster", "creation");
 
     // AC adding for deer
     private static final double DEER_CREATION_PROBABILITY = Values.getProb("Deer", "creation");
@@ -35,7 +35,7 @@ public class Simulator {
     // The current step of the simulation.
     private int step;
     //(AC) Adding DayTime to the simulator class
-    private DayTime dayTime;
+    private Environment environment;
 
     /**
      * Construct a simulation field with default size.
@@ -60,7 +60,7 @@ public class Simulator {
 
         field = new Field(depth, width);
         view = new SimulatorView(depth, width);
-        dayTime = new DayTime(0, 0);
+        environment = new Environment(0, 0);
 
         reset();
     }
@@ -96,26 +96,26 @@ public class Simulator {
 
     /**
      * Run the simulation from its current state for a single step.
-     * Iterate over the whole field updating the state of each fox and rabbit.
+     * Iterate over the whole field updating the state of each wolf and hamster.
      */
     public void simulateOneStep() {
         step++;
         // Use a separate Field to store the starting state of
         // the next step.
-        dayTime.advanceHour();
+        environment.advanceStep();
         //(AC) Advance hour by one
         Field nextFieldState = new Field(field.getDepth(), field.getWidth());
 
         List<Organism> organisms = field.getAnimals();
         for (Organism anOrganism : organisms) {
-            anOrganism.act(field, nextFieldState, dayTime);
+            anOrganism.act(field, nextFieldState, environment);
         }
 
         // Replace the old state with the new one.
         field = nextFieldState;
 
         reportStats();
-        view.showStatus(step, dayTime, field);
+        view.showStatus(step, environment, field);
     }
 
     /**
@@ -124,11 +124,11 @@ public class Simulator {
     public void reset() {
         step = 0;
         populate();
-        view.showStatus(step, dayTime, field);
+        view.showStatus(step, environment, field);
     }
 
     /**
-     * Randomly populate the field with foxes and rabbits.
+     * Randomly populate the field with wolves and hamsters.
      */
     private void populate() {
         Random rand = Randomizer.getRandom();
@@ -144,9 +144,9 @@ public class Simulator {
                 } else if (rand.nextDouble() <= DEER_CREATION_PROBABILITY) {
                     field.placeAnimal(new Deer(true, location), location);
                 } else if (rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
-                    field.placeAnimal(new Rabbit(true, location), location);
+                    field.placeAnimal(new Hamster(true, location), location);
                 } else if (rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
-                    field.placeAnimal(new Fox(true, location), location);
+                    field.placeAnimal(new Wolf(true, location), location);
                 } else if (rand.nextDouble() <= Values.getProb("Plant", "creation")) {
                     field.placeAnimal(new Plant(true, location), location);
                 }

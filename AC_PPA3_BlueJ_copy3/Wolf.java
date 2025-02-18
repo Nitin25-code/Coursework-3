@@ -2,21 +2,21 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A simple model of a fox.
- * Foxes age, move, eat, breed, and die.
+ * A simple model of a wolf.
+ * Wolves age, move, eat, breed, and die.
  *
  * @author David J. Barnes and Michael Kölling
  * @version 7.1
  */
-public class Fox extends Organism {
-    // Characteristics shared by all foxes (class variables).
-    private static final int BREEDING_AGE = Values.getInt("Fox", "breed_age");
+public class Wolf extends Organism {
+    // Characteristics shared by all wolves (class variables).
+    private static final int BREEDING_AGE = Values.getInt("Wolf", "breed_age");
 
     // The age to which a tiger can live.
-    private static final int MAX_AGE = Values.getInt("Fox", "max_age");
+    private static final int MAX_AGE = Values.getInt("Wolf", "max_age");
 
     // The likelihood of a tiger breeding.
-    private static final double BREEDING_PROBABILITY = Values.getProb("Fox", "breeding");
+    private static final double BREEDING_PROBABILITY = Values.getProb("Wolf", "breeding");
 
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
@@ -26,12 +26,12 @@ public class Fox extends Organism {
     private static final Random rand = Randomizer.getRandom();
 
     /**
-     * Create a fox with an optional random age and gender.
+     * Create a wolf with an optional random age and gender.
      *
-     * @param randomAge If true, the fox will have random age and hunger level.
+     * @param randomAge If true, the wolf will have random age and hunger level.
      * @param location  The location within the field.
      */
-    public Fox(boolean randomAge, Location location) {
+    public Wolf(boolean randomAge, Location location) {
         super(randomAge, location);
     }
 
@@ -40,7 +40,7 @@ public class Fox extends Organism {
         for (Location loc : adjacent) {
             Organism organism = field.getAnimalAt(loc);
             if (organism != null && organism.isAlive()) {
-                if (organism instanceof Rabbit ||
+                if (organism instanceof Hamster ||
                         organism instanceof Bison ||
                         organism instanceof Deer) {
                     setFoodLevel(organism.getFoodLevel());
@@ -51,12 +51,12 @@ public class Fox extends Organism {
         return null;
     }
 
-    private Fox findMate(Field field) {
+    private Wolf findMate(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
             Organism organism = field.getAnimalAt(loc);
-            if (organism instanceof Fox && canMateWith(organism)) {
-                return (Fox) organism;
+            if (organism instanceof Wolf && canMateWith(organism)) {
+                return (Wolf) organism;
             }
         }
         return null;
@@ -68,16 +68,16 @@ public class Fox extends Organism {
 
     @Override
     public boolean canMateWith(Organism organism) {
-        return organism instanceof Fox && this.isMale() != organism.isMale();
+        return organism instanceof Wolf && this.isMale() != organism.isMale();
     }
 
     protected void giveBirth(Field currentField, Field nextField, List<Location> freeLocations) {
-        Fox mate = findMate(currentField);
+        Wolf mate = findMate(currentField);
         if (mate != null && canBreed(currentField)) {
             int births = breed(currentField);
             for (int b = 0; b < births && !freeLocations.isEmpty(); b++) {
                 Location loc = freeLocations.remove(0);
-                Fox young = new Fox(false, loc);
+                Wolf young = new Wolf(false, loc);
                 nextField.placeAnimal(young, loc);
             }
         }

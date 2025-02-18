@@ -3,7 +3,7 @@ import java.util.Random;
 
 /**
  * A simple model of a tiger.
- * Tigers age, move, eat rabbits, and die.
+ * Tigers age, move, eat hamsters, and die.
  *
  * @author David J. Barnes and Michael Kölling
  * @version 7.1
@@ -21,7 +21,7 @@ public class Tiger extends Organism {
 
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
-    // The food value of a single rabbit. In effect, this is the
+    // The food value of a single hamster. In effect, this is the
     // number of steps a tiger can go before it has to eat again.
     private static final int RABBIT_FOOD_VALUE = 5;
     private static final int DEER_FOOD_VALUE = 13;
@@ -53,9 +53,9 @@ public class Tiger extends Organism {
         for (Location loc : adjacent) {
             Organism organism = field.getAnimalAt(loc);
             if (organism != null && organism.isAlive()) {
-                if (organism instanceof Rabbit ||
+                if (organism instanceof Hamster ||
                         organism instanceof Deer ||
-                        organism instanceof Fox ||
+                        organism instanceof Wolf ||
                         organism instanceof Bison) {
                     setFoodLevel(organism.getFoodLevel());
                     organism.setDead();

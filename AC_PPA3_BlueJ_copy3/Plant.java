@@ -42,8 +42,8 @@ public class Plant extends Organism {
     }
 
     @Override
-    public void act(Field currentField, Field nextFieldState, DayTime dayTime) {
-        super.act(currentField, nextFieldState, dayTime);
+    public void act(Field currentField, Field nextFieldState, Environment environment) {
+        super.act(currentField, nextFieldState, environment);
     }
 
     /**

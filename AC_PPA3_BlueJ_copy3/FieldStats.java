@@ -10,7 +10,7 @@ import java.util.Map;
  * @version 7.0
  */
 public class FieldStats {
-    // Counters for each type of entity (fox, rabbit, etc.) in the simulation.
+    // Counters for each type of entity (wolf, hamster, etc.) in the simulation.
     private final Map<Class<?>, Counter> counters;
     // Whether the counters are currently up to date.
     private boolean countsValid;
@@ -91,8 +91,8 @@ public class FieldStats {
     }
 
     /**
-     * Generate counts of the number of foxes and rabbits.
-     * These are not kept up to date as foxes and rabbits
+     * Generate counts of the number of wolves and hamsters.
+     * These are not kept up to date as wolves and hamsters
      * are placed in the field, but only when a request
      * is made for the information.
      *

@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Common elements of foxes, rabbits and deer. (Add as you add organisms)
+ * Common elements of wolves, hamsters and deer. (Add as you add organisms)
  *
  * @author David J. Barnes and Michael Kölling
  * @version 7.0
@@ -44,15 +44,17 @@ public abstract class Organism {
      * @param currentField   The current state of the field.
      * @param nextFieldState The new state being built.
      */
-    public void act(Field currentField, Field nextFieldState, DayTime dayTime) {
+    public void act(Field currentField, Field nextFieldState, Environment environment) {
         incrementAge();
         incrementHunger();
+        if (environment.getCurrentWeather() == WeatherType.SNOWY)//if snowy the hunger to go twice as much
+            incrementHunger();
         if (isAlive()) {
             //AC Only does these things if it is Day
-            if ((dayTime.getHour()) >= (Values.getInt(getClass().getName(), "wake_time")) && (dayTime.getHour()) <= (Values.getInt(getClass().getName(), "sleep_time"))) {
+            if ((environment.getHour()) >= (Values.getInt(getClass().getName(), "wake_time")) && (environment.getHour()) <= (Values.getInt(getClass().getName(), "sleep_time"))) {
                 List<Location> freeLocations =
                         nextFieldState.getFreeAdjacentLocations(getLocation());
-                if (!freeLocations.isEmpty()) {
+                if (!freeLocations.isEmpty() && environment.getCurrentWeather() != WeatherType.WINDY) {
                     giveBirth(currentField, nextFieldState, freeLocations);//AC added current field
                 }
                 if (!(this instanceof Plant)) {
@@ -68,12 +70,12 @@ public abstract class Organism {
                         // Overcrowding.
                         setDead();
                     }
-                }else {
+                } else {
                     //plants do not move
                     nextFieldState.placeAnimal(this, getLocation());
                 }
             } else {
-                //fox sleeping
+                //wolf sleeping
                 nextFieldState.placeAnimal(this, getLocation());
             }
         }

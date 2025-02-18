@@ -64,7 +64,7 @@ public class Deer extends Organism {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
             Organism organism = field.getAnimalAt(loc);
-            if (organism instanceof Deer && canMateWith(organism)) {
+            if (canMateWith(organism)) {
                 return (Deer) organism;
             }
         }
