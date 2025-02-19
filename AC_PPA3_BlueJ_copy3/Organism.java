@@ -15,14 +15,16 @@ public abstract class Organism {
     // The organism's position.
     private Location location;
     // (AC) If the organism is male or not
-    private boolean isMale;
+    private final boolean isMale;
     private int foodLevel;
     private int age;
+    private boolean infected;
+    private static final double INFECTION_PROBABILITY = 0.15;
 
     /**
      * Constructor for objects of class Organism.
      *
-     * @param randomAge
+     * @param randomAge if true, random initial age is assigned else a newborn.
      * @param location  The organism's location.
      */
     public Organism(boolean randomAge, Location location) {
@@ -31,6 +33,9 @@ public abstract class Organism {
         this.isMale = rand.nextBoolean();
         this.foodLevel = rand.nextInt(50) + 50;
         this.age = randomAge ? rand.nextInt(Values.getInt(getClass().getName(), "max_age")) : 0;
+        if (randomAge && rand.nextDouble() < INFECTION_PROBABILITY) {
+            this.infected = true;
+        }
     }
 
 
@@ -47,7 +52,7 @@ public abstract class Organism {
     public void act(Field currentField, Field nextFieldState, Environment environment) {
         incrementAge();
         incrementHunger();
-        if (environment.getCurrentWeather() == WeatherType.SNOWY)//if snowy the hunger to go twice as much
+        if (environment.getCurrentWeather() == WeatherType.SNOWY || infected)//if snowy the hunger to go twice as much
             incrementHunger();
         if (isAlive()) {
             //AC Only does these things if it is Day
@@ -65,19 +70,34 @@ public abstract class Organism {
                     // Try to move into a free location.
                     if (nextLocation != null) {
                         setLocation(nextLocation);
-                        nextFieldState.placeAnimal(this, nextLocation);
+                        nextFieldState.placeOrganism(this, nextLocation);
                     } else {
                         // Overcrowding.
                         setDead();
                     }
                 } else {
                     //plants do not move
-                    nextFieldState.placeAnimal(this, getLocation());
+                    nextFieldState.placeOrganism(this, getLocation());
                 }
             } else {
                 //wolf sleeping
-                nextFieldState.placeAnimal(this, getLocation());
+                nextFieldState.placeOrganism(this, getLocation());
             }
+            spreadDisease(nextFieldState);
+        }
+    }
+
+    private void spreadDisease(Field nextFieldState) {
+        if (isInfected() && rand.nextDouble() < INFECTION_PROBABILITY) {
+            //spread infection
+            List<Location> adjacentLocations = nextFieldState.getAdjacentLocations(location);
+            for (Location adjacentLocation : adjacentLocations) {
+                Organism organismAt = nextFieldState.getOrganismAt(adjacentLocation);
+                if (organismAt != null && !(organismAt instanceof Plant)) {
+                    organismAt.setInfected();
+                }
+            }
+
         }
     }
 
@@ -163,5 +183,13 @@ public abstract class Organism {
 
     protected int getAge() {
         return this.age;
+    }
+
+    public boolean isInfected() {
+        return infected;
+    }
+
+    private void setInfected() {
+        this.infected = true;
     }
 }

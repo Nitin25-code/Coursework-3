@@ -12,44 +12,44 @@ public class Values {
             case "Deer":
                 switch (dataType) {
                     case "creation":
-                        return 0.012;
+                        return 0.032;
                     case "breeding":
-                        return 0.24;
+                        return 0.34;
                 }
             case "Wolf":
                 switch (dataType) {
                     case "creation":
-                        return 0.009;
+                        return 0.029;
                     case "breeding":
-                        return 0.24;
+                        return 0.38;
                 }
             case "Hamster":
                 switch (dataType) {
                     case "creation":
-                        return 0.012;
+                        return 0.032;
                     case "breeding":
-                        return 0.24;
+                        return 0.22;
                 }
             case "Tiger":
                 switch (dataType) {
                     case "creation":
-                        return 0.015;
+                        return 0.025;
                     case "breeding":
                         return 0.24;
                 }
             case "Bison":
                 switch (dataType) {
                     case "creation":
-                        return 0.01;
+                        return 0.03;
                     case "breeding":
-                        return 0.24;
+                        return 0.29;
                 }
             case "Plant":
                 switch (dataType) {
                     case "creation":
-                        return 0.01;
+                        return 0.05;
                     case "breeding":
-                        return 0.24;
+                        return 0.31;
                 }
             default:
                 throw new IllegalArgumentException("Unknown organism type: " + animalType);

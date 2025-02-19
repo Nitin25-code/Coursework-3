@@ -43,7 +43,7 @@ public class SimulatorView extends JFrame {
         setColor(Hamster.class, Color.cyan);
         setColor(Wolf.class, Color.pink);
         setColor(Deer.class, Color.blue);
-        setColor(Tiger.class, Color.red);
+        setColor(Tiger.class, Color.orange);
         setColor(Bison.class, new Color(101, 55, 0));
         setColor(Plant.class, Color.green);
 
@@ -107,13 +107,16 @@ public class SimulatorView extends JFrame {
 
         for (int row = 0; row < field.getDepth(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
-                Object organism = field.getAnimalAt(new Location(row, col));
+                Organism organism = field.getOrganismAt(new Location(row, col));
+                Color colour = EMPTY_COLOR;
                 if (organism != null) {
                     stats.incrementCount(organism.getClass());
-                    fieldView.drawMark(col, row, getColor(organism.getClass()));
-                } else {
-                    fieldView.drawMark(col, row, EMPTY_COLOR);
+                    colour = getColor(organism.getClass());
+                    if (organism.isInfected()) {
+                        colour = Color.RED;
+                    }
                 }
+                fieldView.drawMark(col, row, colour);
             }
         }
         stats.countFinished();

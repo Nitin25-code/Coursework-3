@@ -42,7 +42,7 @@ public class Deer extends Organism {
     protected Location findFood(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
+            Organism organism = field.getOrganismAt(loc);
             if (organism != null && organism.isAlive()) {
                 if (organism instanceof Plant) {
                     setFoodLevel(organism.getFoodLevel());
@@ -63,7 +63,7 @@ public class Deer extends Organism {
     private Deer findMate(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
+            Organism organism = field.getOrganismAt(loc);
             if (canMateWith(organism)) {
                 return (Deer) organism;
             }
@@ -88,7 +88,7 @@ public class Deer extends Organism {
             for (int b = 0; b < births && !freeLocations.isEmpty(); b++) {
                 Location loc = freeLocations.remove(0);
                 Deer young = new Deer(false, loc);  // Random gender
-                nextField.placeAnimal(young, loc);
+                nextField.placeOrganism(young, loc);
             }
         }
     }

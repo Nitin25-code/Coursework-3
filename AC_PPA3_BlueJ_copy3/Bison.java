@@ -48,7 +48,7 @@ public class Bison extends Organism {
     private Bison findMate(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
+            Organism organism = field.getOrganismAt(loc);
             if (organism instanceof Bison && canMateWith(organism)) {
                 return (Bison) organism;
             }
@@ -69,7 +69,7 @@ public class Bison extends Organism {
     protected Location findFood(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
+            Organism organism = field.getOrganismAt(loc);
             if (organism != null && organism.isAlive()) {
                 if (organism instanceof Plant) {
                     setFoodLevel(organism.getFoodLevel());
@@ -88,7 +88,7 @@ public class Bison extends Organism {
             for (int b = 0; b < births && !freeLocations.isEmpty(); b++) {
                 Location loc = freeLocations.remove(0);
                 Bison young = new Bison(false, loc);  // Random gender
-                nextField.placeAnimal(young, loc);
+                nextField.placeOrganism(young, loc);
             }
         }
     }

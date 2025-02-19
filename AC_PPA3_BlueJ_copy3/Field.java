@@ -37,7 +37,7 @@ public class Field {
      * @param anOrganism The organism to be placed.
      * @param location   Where to place the organism.
      */
-    public void placeAnimal(Organism anOrganism, Location location) {
+    public void placeOrganism(Organism anOrganism, Location location) {
         assert location != null;
         Object other = field.get(location);
         if (other != null) {
@@ -53,7 +53,7 @@ public class Field {
      * @param location Where in the field.
      * @return The organism at the given location, or null if there is none.
      */
-    public Organism getAnimalAt(Location location) {
+    public Organism getOrganismAt(Location location) {
         return field.get(location);
     }
 
@@ -180,7 +180,7 @@ public class Field {
     /**
      * Get the list of organisms.
      */
-    public List<Organism> getAnimals() {
+    public List<Organism> getOrganisms() {
         return organisms;
     }
 

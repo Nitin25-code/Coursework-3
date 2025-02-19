@@ -56,7 +56,7 @@ public class Plant extends Organism {
     private Plant findMate(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
+            Organism organism = field.getOrganismAt(loc);
             if (organism instanceof Plant && canMateWith(organism)) {
                 return (Plant) organism;
             }
@@ -81,7 +81,7 @@ public class Plant extends Organism {
             for (int b = 0; b < births && !freeLocations.isEmpty(); b++) {
                 Location loc = freeLocations.remove(0);
                 Plant young = new Plant(false, loc);  // Random gender
-                nextField.placeAnimal(young, loc);
+                nextField.placeOrganism(young, loc);
             }
         }
     }

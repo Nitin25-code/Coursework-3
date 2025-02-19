@@ -35,7 +35,7 @@ public class Simulator {
     // The current step of the simulation.
     private int step;
     //(AC) Adding DayTime to the simulator class
-    private Environment environment;
+    private final Environment environment;
 
     /**
      * Construct a simulation field with default size.
@@ -60,7 +60,7 @@ public class Simulator {
 
         field = new Field(depth, width);
         view = new SimulatorView(depth, width);
-        environment = new Environment(0, 0);
+        environment = new Environment(0);
 
         reset();
     }
@@ -106,7 +106,7 @@ public class Simulator {
         //(AC) Advance hour by one
         Field nextFieldState = new Field(field.getDepth(), field.getWidth());
 
-        List<Organism> organisms = field.getAnimals();
+        List<Organism> organisms = field.getOrganisms();
         for (Organism anOrganism : organisms) {
             anOrganism.act(field, nextFieldState, environment);
         }
@@ -138,17 +138,17 @@ public class Simulator {
             for (int col = 0; col < field.getWidth(); col++) {
                 Location location = new Location(row, col);
                 if (rand.nextDouble() <= TIGER_CREATION_PROBABILITY) {
-                    field.placeAnimal(new Tiger(true, location), location);
+                    field.placeOrganism(new Tiger(true, location), location);
                 } else if (rand.nextDouble() <= BISON_CREATION_PROBABILITY) {
-                    field.placeAnimal(new Bison(true, location), location);
+                    field.placeOrganism(new Bison(true, location), location);
                 } else if (rand.nextDouble() <= DEER_CREATION_PROBABILITY) {
-                    field.placeAnimal(new Deer(true, location), location);
+                    field.placeOrganism(new Deer(true, location), location);
                 } else if (rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
-                    field.placeAnimal(new Hamster(true, location), location);
+                    field.placeOrganism(new Hamster(true, location), location);
                 } else if (rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
-                    field.placeAnimal(new Wolf(true, location), location);
+                    field.placeOrganism(new Wolf(true, location), location);
                 } else if (rand.nextDouble() <= Values.getProb("Plant", "creation")) {
-                    field.placeAnimal(new Plant(true, location), location);
+                    field.placeOrganism(new Plant(true, location), location);
                 }
                 // If the number is greater than all combined probabilities, leave the cell empty.
             }

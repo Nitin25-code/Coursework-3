@@ -1,3 +1,3 @@
 public enum WeatherType {
-    NORMAL, SUNNY, WINDY, SNOWY, RAINY;
+    NORMAL, WINDY, SNOWY
 }

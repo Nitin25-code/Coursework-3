@@ -38,7 +38,7 @@ public class Wolf extends Organism {
     protected Location findFood(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
+            Organism organism = field.getOrganismAt(loc);
             if (organism != null && organism.isAlive()) {
                 if (organism instanceof Hamster ||
                         organism instanceof Bison ||
@@ -54,7 +54,7 @@ public class Wolf extends Organism {
     private Wolf findMate(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
+            Organism organism = field.getOrganismAt(loc);
             if (organism instanceof Wolf && canMateWith(organism)) {
                 return (Wolf) organism;
             }
@@ -78,7 +78,7 @@ public class Wolf extends Organism {
             for (int b = 0; b < births && !freeLocations.isEmpty(); b++) {
                 Location loc = freeLocations.remove(0);
                 Wolf young = new Wolf(false, loc);
-                nextField.placeAnimal(young, loc);
+                nextField.placeOrganism(young, loc);
             }
         }
     }

@@ -40,7 +40,7 @@ public class Hamster extends Organism {
     protected Location findFood(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
+            Organism organism = field.getOrganismAt(loc);
             if (organism != null && organism.isAlive()) {
                 if (organism instanceof Plant) {
                     setFoodLevel(organism.getFoodLevel());
@@ -61,7 +61,7 @@ public class Hamster extends Organism {
     private Hamster findMate(Field field) {
         List<Location> adjacent = field.getAdjacentLocations(getLocation());
         for (Location loc : adjacent) {
-            Organism organism = field.getAnimalAt(loc);
+            Organism organism = field.getOrganismAt(loc);
             if (organism instanceof Hamster && canMateWith(organism)) {
                 return (Hamster) organism;
             }
@@ -86,7 +86,7 @@ public class Hamster extends Organism {
             for (int b = 0; b < births && !freeLocations.isEmpty(); b++) {
                 Location loc = freeLocations.remove(0);
                 Hamster young = new Hamster(false, loc);  // Random gender
-                nextField.placeAnimal(young, loc);
+                nextField.placeOrganism(young, loc);
             }
         }
     }

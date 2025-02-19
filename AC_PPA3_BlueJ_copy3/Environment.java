@@ -3,9 +3,9 @@ public class Environment {
     private int stepCount;
     private WeatherType currentWeather;
 
-    public Environment(int hour, int stepCount) {
-        this.hour = hour;
+    public Environment(int stepCount) {
         this.stepCount = stepCount;
+        this.hour = stepCount % 24;
         currentWeather = WeatherType.NORMAL;
     }
 
@@ -22,12 +22,12 @@ public class Environment {
         return currentWeather;
     }
 
-    public String DayorNight() {
-        if (hour >= 6 && hour <= 20) {
-            return "Day";
-        } else {
-            return "Night";
-        }
+    public boolean isDay() {
+        return hour >= 6 && hour <= 20;
+    }
+
+    public int getStep() {
+        return stepCount;
     }
 
     public int getHour() {
